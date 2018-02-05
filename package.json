@@ -4,7 +4,7 @@
   "description": "Zonafide Together Token Sale Smart Contract",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "scripts/test.sh"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,11 @@
   },
   "homepage": "https://github.com/pjworrall/zonafidetoken#readme",
   "dependencies": {
-    "truffle-hdwallet-provider": "0.0.3"
+    "truffle-hdwallet-provider": "0.0.3",
+    "zeppelin-solidity": "^1.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }
