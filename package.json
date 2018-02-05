@@ -1,0 +1,29 @@
+{
+  "name": "together",
+  "version": "0.0.1",
+  "description": "Zonafide Together Token Sale Smart Contract",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjworrall/zonafidetoken.git"
+  },
+  "keywords": [
+    "zonafide",
+    "erc20",
+    "token",
+    "together",
+    "tog"
+  ],
+  "author": "Paul Worrall <paul.worrall@interition.net> (https://uk.linkedin.com/in/worrall)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pjworrall/zonafidetoken/issues"
+  },
+  "homepage": "https://github.com/pjworrall/zonafidetoken#readme",
+  "dependencies": {
+    "truffle-hdwallet-provider": "0.0.3"
+  }
+}

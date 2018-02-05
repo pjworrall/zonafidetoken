@@ -1,0 +1,10 @@
+# Created by .ignore support plugin
+
+.idea
+# build this might need to be kept because apparently truffle uses it to store address of deploy contracts
+build
+
+# any mnemonic keys we would prefer not to be on the public store
+keys
+
+node_nodules
