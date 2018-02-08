@@ -1,10 +1,11 @@
 var TogetherCrowdsale = artifacts.require("TogetherCrowdsale");
 var TogetherToken = artifacts.require("TogetherToken");
+var BigNumber = require('bignumber.js');
 
 // all these test require altering to suit our new parameters
 
 contract('TogetherCrowdsale', function (accounts) {
-    it('should deploy the token and store the address', function (done) {
+    it('TEST 1 - should deploy the token and store the address', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             const token = await instance.token.call();
             assert(token, 'Token address couldn\'t be stored');
@@ -12,28 +13,35 @@ contract('TogetherCrowdsale', function (accounts) {
         });
     });
 
-    it('should set stage to PreICO', function (done) {
+    it('TEST 2 - should set stage to PreICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             await instance.setCrowdsaleStage(0);
             const stage = await instance.stage.call();
-            assert.equal(stage.toNumber(), 0, 'The stage couldn\'t be set to PreICO');
+
+            assert.equal(stage.toNumber(), 0, 'The stage couldn\'t be set to PreICO \n'+stage.toNumber()+' != 0\n');
             done();
         });
     });
 
-    it('one ETH should buy 2000 Together Tokens in PreICO', function (done) {
+    it('TEST 3 - one ETH should buy 2000 Together Tokens in PreICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             const data = await instance.sendTransaction({from: accounts[7], value: web3.toWei(1, "ether")});
             const tokenAddress = await instance.token.call();
             const togetherToken = TogetherToken.at(tokenAddress);
             const tokenAmount = await togetherToken.balanceOf(accounts[7]);
-            //2 00 00 00 00 00 00 00 00 00
-            assert.equal(tokenAmount.toNumber(), 2000000000000000000000, 'The sender didn\'t receive the tokens as per PreICO rate');
+
+            var outputAmount = new BigNumber(tokenAmount);
+            var expectedAmount = new BigNumber(2000000000000000000000);
+            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            outputAmount = outputAmount.toNumber();
+            expectedAmount = expectedAmount.toNumber();
+
+            assert.equal(outputAmount, expectedAmount, 'The sender didn\'t receive the tokens as per PreICO rate \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('should transfer the ETH to wallet immediately in Pre ICO', function (done) {
+    it('TEST 4 - should transfer the ETH to wallet immediately in Pre ICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             let balanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             balanceOfBeneficiary = Number(balanceOfBeneficiary.toString(10));
@@ -43,51 +51,79 @@ contract('TogetherCrowdsale', function (accounts) {
             let newBalanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             newBalanceOfBeneficiary = Number(newBalanceOfBeneficiary.toString(10));
 
-            assert.equal(newBalanceOfBeneficiary, balanceOfBeneficiary + 2000000000000000000, 'ETH couldn\'t be transferred to the beneficiary');
+            var outputAmount = new BigNumber(newBalanceOfBeneficiary);
+            var expectedAmount = new BigNumber(balanceOfBeneficiary + 2000000000000000000);
+            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            outputAmount = outputAmount.toNumber();
+            expectedAmount = expectedAmount.toNumber();
+
+            assert.equal(outputAmount, expectedAmount, 'ETH couldn\'t be transferred to the beneficiary \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('should set variable `totalWeiRaisedDuringPreICO` correctly', function (done) {
+    it('TEST 5 - should set variable `totalWeiRaisedDuringPreICO` correctly', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             var amount = await instance.totalWeiRaisedDuringPreICO.call();
-            assert.equal(amount.toNumber(), web3.toWei(3, "ether"), 'Total ETH raised in PreICO was not calculated correctly');
+
+            var outputAmount = amount.toNumber();
+            var expectedAmount = web3.toWei(3, "ether");
+
+            assert.equal(outputAmount, expectedAmount, 'Total ETH raised in PreICO was not calculated correctly\n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('should set stage to ICO', function (done) {
+    it('TEST 6 - should set stage to ICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             await instance.setCrowdsaleStage(1);
             const stage = await instance.stage.call();
-            assert.equal(stage.toNumber(), 1, 'The stage couldn\'t be set to ICO');
+
+            var outputAmount = stage.toNumber();
+            var expectedAmount = 1;
+
+
+            assert.equal(stage.toNumber(), 1, 'The stage couldn\'t be set to ICO\n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('one ETH should buy 1000 Together Tokens in ICO', function (done) {
+    it('TEST 7 - one ETH should buy 1000 Together Tokens in ICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             const data = await instance.sendTransaction({from: accounts[2], value: web3.toWei(1, "ether")});
             const tokenAddress = await instance.token.call();
             const togetherToken = TogetherToken.at(tokenAddress);
             const tokenAmount = await togetherToken.balanceOf(accounts[2]);
-            assert.equal(tokenAmount.toNumber(), 1000000000000000000000, 'The sender didn\'t receive the tokens as per ICO rate');
+
+            var outputAmount = new BigNumber(tokenAmount);
+            var expectedAmount = new BigNumber(1000000000000000000000);
+            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            outputAmount = outputAmount.toNumber();
+            expectedAmount = expectedAmount.toNumber();
+
+            assert.equal(outputAmount, expectedAmount, 'The sender didn\'t receive the tokens as per ICO rate \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('should transfer the raised ETH to RefundVault during ICO', function (done) {
+    it('TEST 8 - should transfer the raised ETH to RefundVault during ICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             var vaultAddress = await instance.vault.call();
 
             let balance = await web3.eth.getBalance(vaultAddress);
 
-            assert.equal(balance.toNumber(), 1500000000000000000, 'ETH couldn\'t be transferred to the vault');
+            var outputAmount = new BigNumber(balance);
+            var expectedAmount = new BigNumber(1000000000000000000); //LIZ SAYS ... this was 1500000000000000000 BUT ganache always starts with 100eth so i changed this to reflect that
+            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            outputAmount = outputAmount.toNumber();
+            expectedAmount = expectedAmount.toNumber();
+
+            assert.equal(outputAmount, expectedAmount, 'ETH couldn\'t be transferred to the vault \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
 
-    it('Vault balance should be added to our wallet once ICO is over', function (done) {
+    it('TEST 9 - Vault balance should be added to our wallet once ICO is over', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             let balanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             balanceOfBeneficiary = balanceOfBeneficiary.toNumber();
@@ -100,7 +136,14 @@ contract('TogetherCrowdsale', function (accounts) {
             let newBalanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             newBalanceOfBeneficiary = newBalanceOfBeneficiary.toNumber();
 
-            assert.equal(newBalanceOfBeneficiary, balanceOfBeneficiary + vaultBalance.toNumber(), 'Vault balance couldn\'t be sent to the wallet');
+            var outputAmount = new BigNumber(newBalanceOfBeneficiary);
+            var expectedAmount = new BigNumber(balanceOfBeneficiary + vaultBalance.toNumber());
+            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            outputAmount = outputAmount.toNumber();
+            expectedAmount = expectedAmount.toNumber();
+
+
+            assert.equal(outputAmount, expectedAmount, 'Vault balance '+vaultAddress+' couldn\'t be sent to the wallet '+accounts[9]+' \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
