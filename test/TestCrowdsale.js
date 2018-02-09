@@ -147,4 +147,209 @@ contract('TogetherCrowdsale', function (accounts) {
             done();
         });
     });
+
+
+  // Zonafide crowdsale tests
+
+    it('TEST 10 -  should not allow purchase less that X ETH during Pre-ICO stage', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+    it('TEXT X -  ', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            assert.isTrue(false);
+            done();
+        });
+    });
+
+
+
+
 });
