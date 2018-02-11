@@ -31,7 +31,7 @@ contract('TogetherCrowdsale', function (accounts) {
             const tokenAmount = await togetherToken.balanceOf(accounts[7]);
 
             var outputAmount = new BigNumber(tokenAmount);
-            var expectedAmount = new BigNumber(2000000000000000000000);
+            var expectedAmount = new BigNumber(2000000000000000000);
             //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
             outputAmount = outputAmount.toNumber();
             expectedAmount = expectedAmount.toNumber();
@@ -96,7 +96,7 @@ contract('TogetherCrowdsale', function (accounts) {
             const tokenAmount = await togetherToken.balanceOf(accounts[2]);
 
             var outputAmount = new BigNumber(tokenAmount);
-            var expectedAmount = new BigNumber(1000000000000000000000);
+            var expectedAmount = new BigNumber(1000000000000000000);
             //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
             outputAmount = outputAmount.toNumber();
             expectedAmount = expectedAmount.toNumber();

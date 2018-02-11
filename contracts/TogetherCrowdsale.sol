@@ -140,6 +140,7 @@ contract TogetherCrowdsale is CappedCrowdsale, RefundableCrowdsale {
 
     // REMOVE THIS FUNCTION ONCE YOU ARE READY FOR PRODUCTION
     // USEFUL FOR TESTING `finish()` FUNCTION
+    // it is overriding the function on super
     function hasEnded() public view returns (bool) {
         return true;
     }
