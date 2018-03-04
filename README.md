@@ -1,5 +1,15 @@
 # Zonafide Together Token
-Ethereum Smart Contract for Zonafide Together Token TGE (ERC20)
+
+**THIS IS THE CROWDSALE AND TOKEN CONTRACT UNDER DEVELOPMENT**
+
+**IT IS STILL A WORK IN PROGRESS**
+
+**I REPEAT..**
+
+**THIS IS THE CROWDSALE AND TOKEN CONTRACT UNDER DEVELOPMENT**
+** IT IS STILL A WORK IN PROGRESS.**
+
+#Ethereum Smart Contract for Zonafide Together Token TGE (ERC20)
 
 ## Requirements
 
