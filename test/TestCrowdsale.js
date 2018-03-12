@@ -8,6 +8,9 @@ contract('TogetherCrowdsale', function (accounts) {
     it('TEST 1 - should deploy the token and store the address', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             const token = await instance.token.call();
+
+            console.log("token contract address: " + token);
+
             assert(token, 'Token address couldn\'t be stored');
             done();
         });
@@ -17,6 +20,8 @@ contract('TogetherCrowdsale', function (accounts) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             await instance.setCrowdsaleStage(0);
             const stage = await instance.stage.call();
+
+            console.log("stage is: " + stage.toNumber());
 
             assert.equal(stage.toNumber(), 0, 'The stage couldn\'t be set to PreICO \n'+stage.toNumber()+' != 0\n');
             done();
@@ -110,11 +115,12 @@ contract('TogetherCrowdsale', function (accounts) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             var vaultAddress = await instance.vault.call();
 
+            console.log("vault address: " + vaultAddress);
+
             let balance = await web3.eth.getBalance(vaultAddress);
 
             var outputAmount = new BigNumber(balance);
-            var expectedAmount = new BigNumber(1000000000000000000); //LIZ SAYS ... this was 1500000000000000000 BUT ganache always starts with 100eth so i changed this to reflect that
-            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            var expectedAmount = new BigNumber(1000000000000000000);
             outputAmount = outputAmount.toNumber();
             expectedAmount = expectedAmount.toNumber();
 
@@ -124,6 +130,8 @@ contract('TogetherCrowdsale', function (accounts) {
     });
 
     it('TEST 9 - Vault balance should be added to our wallet once ICO is over', function (done) {
+
+
         TogetherCrowdsale.deployed().then(async function (instance) {
             let balanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             balanceOfBeneficiary = balanceOfBeneficiary.toNumber();
@@ -131,19 +139,24 @@ contract('TogetherCrowdsale', function (accounts) {
             var vaultAddress = await instance.vault.call();
             let vaultBalance = await web3.eth.getBalance(vaultAddress);
 
+            // todo: verify what this is doing exactly
             await instance.finish(accounts[0], accounts[1], accounts[2]);
 
             let newBalanceOfBeneficiary = await web3.eth.getBalance(accounts[9]);
             newBalanceOfBeneficiary = newBalanceOfBeneficiary.toNumber();
+            //
+            // var outputAmount = new BigNumber(newBalanceOfBeneficiary);
+            // var expectedAmount = new BigNumber(balanceOfBeneficiary + vaultBalance.toNumber());
+            // //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
+            // outputAmount = outputAmount.toNumber();
+            // expectedAmount = expectedAmount.toNumber();
+            //
+            //
+            // assert.equal(outputAmount, expectedAmount, 'Vault balance '+vaultAddress+' couldn\'t be sent to the wallet '+accounts[9]+' \n'+outputAmount+' != '+expectedAmount+'\n');
+            //
 
-            var outputAmount = new BigNumber(newBalanceOfBeneficiary);
-            var expectedAmount = new BigNumber(balanceOfBeneficiary + vaultBalance.toNumber());
-            //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
-            outputAmount = outputAmount.toNumber();
-            expectedAmount = expectedAmount.toNumber();
+            assert.equal(newBalanceOfBeneficiary, balanceOfBeneficiary + vaultBalance.toNumber(), 'Vault balance couldn\'t be sent to the wallet');
 
-
-            assert.equal(outputAmount, expectedAmount, 'Vault balance '+vaultAddress+' couldn\'t be sent to the wallet '+accounts[9]+' \n'+outputAmount+' != '+expectedAmount+'\n');
             done();
         });
     });
