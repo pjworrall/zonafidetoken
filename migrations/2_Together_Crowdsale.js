@@ -9,27 +9,16 @@ var TogetherToken = artifacts.require("./TogetherToken.sol");
 module.exports = function (deployer, network, accounts) {
     const startTime = web3.eth.getBlock('latest').timestamp + 60; // 1 min in the future
     const endTime = startTime + 86400 * 20; // 20 days
-    const rate = new web3.BigNumber(1000);
+    const rate = new web3.BigNumber(2000);
     const wallet = accounts[9];
+    const goal = new web3.BigNumber(4000000000000000000000);
+    const cap = new web3.BigNumber(50000000000000000000000);
 
-    const goal = new web3.BigNumber(200000000000000000000);
-    const cap = new web3.BigNumber(25000000000000000000000000);
+    deployer.deploy(TogetherCrowdsale,
+        rate,
+        wallet,
+        cap
+    );
 
-    return deployer
-        .then(() => {
-            return deployer.deploy(TogetherToken);
-        })
-        .then(() => {
-            return deployer.deploy(
-                TogetherCrowdsale,
-                startTime,
-                endTime,
-                rate,
-                wallet,
-                goal,
-                cap,
-                TogetherToken.address
-            );
-        });
 };
 
