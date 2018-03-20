@@ -29,7 +29,7 @@ contract('TogetherCrowdsale', function (accounts) {
             const togetherToken = TogetherToken.at(tokenAddress);
             const tokenAmount = await togetherToken.balanceOf(accounts[7]);
 
-            console.log("tokenAmount: " + tokenAmount );
+            console.log("tokenAmount: " + tokenAmount.toString() );
             //
             // var outputAmount = new BigNumber(tokenAmount);
             // var expectedAmount = new BigNumber(2000000000000000000);

@@ -23,6 +23,20 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
     // By default it's Pre Sale
     CrowdsaleStage public stage = CrowdsaleStage.PreICO;
 
+
+    // Token Distribution
+    // =============================
+
+    uint256 public maxTokens = 200000000000000000000000000; // There will be total 200,000,000 TOG
+    uint256 public tokensForEcosystem = 30000000000000000000000000; // 15% TOG
+    uint256 public tokensForTeam = 12000000000000000000000000; // 6% TOG
+    uint256 public tokensForBounty = 8000000000000000000000000; // 4% TOG (ICO assistance)
+    uint256 public totalTokensForSale = 70000000000000000000000000; // 70m TOG will be sold in Crowdsale
+    uint256 public totalTokensForSaleDuringPreICO = 80000000000000000000000000; // 80m TOG will be sold during PreICO
+    // ==============================
+
+
+
     // ============
     // Constructor
     // ============
@@ -49,17 +63,11 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
         stage = _stage;
 
         if (stage == CrowdsaleStage.PreICO) {
-            setCurrentRate(2);   // this is a 100% we will need a 30% bonus
+            rate = rate;   // this is where a 30% bonus
         } else if (stage == CrowdsaleStage.ICO) {
-            setCurrentRate(1);   // no bonus in the public sale
+            rate = rate;   // no bonus in the public sale
         }
     }
 
-    // Change the current rate
-    // @todo: would we want to be able to do this?
-    function setCurrentRate(uint256 _rate) private {
-
-        rate = _rate;
-    }
 
 }
