@@ -8,7 +8,7 @@ import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 import "./TogetherToken.sol";
 
-contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
+contract TogetherCrowdsale is CappedCrowdsale, MintedCrowdsale, Ownable {
 
 
     // TogetherToken
@@ -19,7 +19,7 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
     // ICO Stage
     // =========
 
-    enum CrowdsaleStage { PreICO, ICO }
+    enum CrowdsaleStage {PreICO, ICO}
 
     // By default it's Pre Sale
     CrowdsaleStage public stage = CrowdsaleStage.PreICO;
@@ -30,6 +30,9 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
     // =======================
     uint256 public totalWeiRaisedDuringPreICO;
     // =======================
+
+
+    uint256 private _ico_rate;
 
 
     // Token Distribution
@@ -43,7 +46,17 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
     uint256 public totalTokensForSaleDuringPreICO = 80000000000000000000000000; // 80m TOG will be sold during PreICO
     // ==============================
 
+    /**
+    * Event for pre ico bonus rate set logging
+    * @param rate amount of tokens per wei during pre ico bonus period
+    */
+    event PreICOBonusRate(uint256 indexed rate);
 
+    /**
+    * Event for ico standard bonus rate set logging
+    * @param rate amount of tokens per wei during ico period
+    */
+    event ICOStandardRate(uint256 indexed rate);
 
     // ============
     // Constructor
@@ -56,10 +69,10 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
     {}
 
 
-/**
-* @dev Crowdsale Stage Management. Change Crowdsale Stage. Available Options: PreICO, ICO. This logic needs thinking about!!!
-* @param value 0 or 1, Pre-ICO and ICO respectively
-*/
+    /**
+    * @dev Crowdsale Stage Management. Change Crowdsale Stage. Available Options: PreICO, ICO. This logic needs thinking about!!!
+    * @param value 0 or 1, Pre-ICO and ICO respectively
+    */
     function setCrowdsaleStage(uint value) public onlyOwner {
 
         CrowdsaleStage _stage;
@@ -75,15 +88,18 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
         stage = _stage;
 
         if (stage == CrowdsaleStage.PreICO) {
-            rate = rate;   // this is where a 30% bonus
-        } else if (stage == CrowdsaleStage.ICO) {
-            rate = rate;   // no bonus in the public sale
+            _ico_rate = rate;
+            rate = rate.mul(13).div(10);
 
+            PreICOBonusRate(rate);
+
+        } else if (stage == CrowdsaleStage.ICO) {
+            rate = _ico_rate;
+            ICOStandardRate(rate);
             /*
             * todo: if we assume switching to ICO is once, we could record the amount raised in the Pre ICO like this...
             * but maybe not the final solution!
             */
-
             totalWeiRaisedDuringPreICO = weiRaised;
         }
     }

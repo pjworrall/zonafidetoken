@@ -22,7 +22,7 @@ contract('TogetherCrowdsale', function (accounts) {
         });
     });
 
-    it('TEST 3 - one ETH should buy the rate of Together Tokens in PreICO', function (done) {
+    it('TEST 3 - one ETH should buy 1.3 times more Together Tokens in PreICO', function (done) {
         TogetherCrowdsale.deployed().then(async function (instance) {
             const data = await instance.sendTransaction({from: accounts[7], value: web3.toWei(1, "ether")});
             const tokenAddress = await instance.token.call();
@@ -30,10 +30,10 @@ contract('TogetherCrowdsale', function (accounts) {
             const tokenAmount = await togetherToken.balanceOf(accounts[7]);
 
             /*
-                The comparison amount here reflects how the tokens are recorded in the contract. 18 places are for the decimals.
-                So 2000 TOG will actually be represented as 2000 * 1e18 .
+                The answer should be 2600. The comparison amount here reflects how the tokens are recorded in
+                the contract. 18 places are for the decimals. So 2600 TOG will actually be represented as 2000 * 1e18 .
             */
-            assert.equal(tokenAmount.toNumber(), 2000000000000000000000, 'The sender didn\'t receive the tokens as per PreICO rate \n');
+            assert.equal(tokenAmount.toNumber(), 2600000000000000000000, 'The sender didn\'t receive the tokens as per PreICO rate \n');
             done();
         });
     });
@@ -79,24 +79,19 @@ contract('TogetherCrowdsale', function (accounts) {
         });
     });
 
-  //
-  //   it('TEST 7 - one ETH should buy 1000 Together Tokens in ICO', function (done) {
-  //       TogetherCrowdsale.deployed().then(async function (instance) {
-  //           const data = await instance.sendTransaction({from: accounts[2], value: web3.toWei(1, "ether")});
-  //           const tokenAddress = await instance.token.call();
-  //           const togetherToken = TogetherToken.at(tokenAddress);
-  //           const tokenAmount = await togetherToken.balanceOf(accounts[2]);
-  //
-  //           var outputAmount = new BigNumber(tokenAmount);
-  //           var expectedAmount = new BigNumber(1000000000000000000);
-  //           //even though we have converted it to bigNumber in order to do a equality check we have to cast the big number back to a number
-  //           outputAmount = outputAmount.toNumber();
-  //           expectedAmount = expectedAmount.toNumber();
-  //
-  //           assert.equal(outputAmount, expectedAmount, 'The sender didn\'t receive the tokens as per ICO rate \n'+outputAmount+' != '+expectedAmount+'\n');
-  //           done();
-  //       });
-  //   });
+
+    it('TEST 7 - one ETH should buy 2000 Together Tokens in ICO', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            const data = await instance.sendTransaction({from: accounts[2], value: web3.toWei(1, "ether")});
+            const tokenAddress = await instance.token.call();
+            const togetherToken = TogetherToken.at(tokenAddress);
+            const tokenAmount = await togetherToken.balanceOf(accounts[2]);
+
+            assert.equal(tokenAmount.toNumber(), 2000000000000000000000, 'The sender didn\'t receive the tokens as per ICO rate');
+            done();
+        });
+    });
+
   //
   //   it('TEST 8 - should transfer the raised ETH to RefundVault during ICO', function (done) {
   //       TogetherCrowdsale.deployed().then(async function (instance) {
