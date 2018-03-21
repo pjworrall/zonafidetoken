@@ -69,20 +69,16 @@ contract('TogetherCrowdsale', function (accounts) {
         });
     });
 
-  //
-  //   it('TEST 6 - should set stage to ICO', function (done) {
-  //       TogetherCrowdsale.deployed().then(async function (instance) {
-  //           await instance.setCrowdsaleStage(1);
-  //           const stage = await instance.stage.call();
-  //
-  //           var outputAmount = stage.toNumber();
-  //           var expectedAmount = 1;
-  //
-  //
-  //           assert.equal(stage.toNumber(), 1, 'The stage couldn\'t be set to ICO\n'+outputAmount+' != '+expectedAmount+'\n');
-  //           done();
-  //       });
-  //   });
+
+    it('TEST 6 - should set stage to ICO', function (done) {
+        TogetherCrowdsale.deployed().then(async function (instance) {
+            await instance.setCrowdsaleStage(1);
+            const stage = await instance.stage.call();
+            assert.equal(stage.toNumber(), 1, 'The stage couldn\'t be set to ICO');
+            done();
+        });
+    });
+
   //
   //   it('TEST 7 - one ETH should buy 1000 Together Tokens in ICO', function (done) {
   //       TogetherCrowdsale.deployed().then(async function (instance) {
