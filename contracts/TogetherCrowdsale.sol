@@ -12,16 +12,24 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
 
 
     // TogetherToken
+    // =============
 
     TogetherToken _token = new TogetherToken();
 
     // ICO Stage
-    // ============
+    // =========
 
     enum CrowdsaleStage { PreICO, ICO }
 
     // By default it's Pre Sale
     CrowdsaleStage public stage = CrowdsaleStage.PreICO;
+
+    // =========
+
+    // Amount that was raised in PreICO
+    // =======================
+    uint256 public totalWeiRaisedDuringPreICO;
+    // =======================
 
 
     // Token Distribution
@@ -47,12 +55,16 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
 
     {}
 
-    // Crowdsale Stage Management
-    // =========================================================
-    // Change Crowdsale Stage. Available Options: PreICO, ICO
+
+/**
+* @dev Crowdsale Stage Management. Change Crowdsale Stage. Available Options: PreICO, ICO. This logic needs thinking about!!!
+* @param value 0 or 1, Pre-ICO and ICO respectively
+*/
     function setCrowdsaleStage(uint value) public onlyOwner {
 
         CrowdsaleStage _stage;
+
+        // todo: require needed for stage to be an acceptable value (although only impact owner)
 
         if (uint(CrowdsaleStage.PreICO) == value) {
             _stage = CrowdsaleStage.PreICO;
@@ -66,6 +78,13 @@ contract TogetherCrowdsale is  CappedCrowdsale, MintedCrowdsale, Ownable {
             rate = rate;   // this is where a 30% bonus
         } else if (stage == CrowdsaleStage.ICO) {
             rate = rate;   // no bonus in the public sale
+
+            /*
+            * todo: if we assume switching to ICO is once, we could record the amount raised in the Pre ICO like this...
+            * but maybe not the final solution!
+            */
+
+            totalWeiRaisedDuringPreICO = weiRaised;
         }
     }
 
